@@ -1,0 +1,77 @@
+inherit cmake
+
+NAME="mbedtls"
+VERSION=2.4.2
+RELEASE=1
+CATEGORY="Net"
+SUMMARY="Light-weight cryptographic and SSL/TLS library"
+DESCRIPTION="A light-weight open source cryptographic and SSL/TLS library written in C.
+Mbed TLS makes it easy for developers to include
+cryptographic and SSL/TLS capabilities in their (embedded)
+applications with as little hassle as possible."
+HOMEPAGE="https://tls.mbed.org/"
+SRC_URI="https://tls.mbed.org/download/mbedtls-${VERSION}-apache.tgz"
+
+PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto0 libmbedtls10 libmbedx509-0"
+
+mbedtls_CATEGORY="Net"
+mbedtls_SUMMARY="Mbed TLS programs"
+mbedtls_REQUIRES="libmbedcrypto0 libmbedtls10 libmbedx509-0"
+mbedtls_CONTENTS="
+	usr/bin/
+"
+
+mbedtls_doc_CATEGORY="Doc"
+mbedtls_doc_SUMMARY="Mbed TLS library (documentation)"
+mbedtls_doc_CONTENTS="
+	usr/share/doc/
+"
+
+mbedtls_devel_CATEGORY="Libs"
+mbedtls_devel_SUMMARY="Mbed TLS library (development)"
+mbedtls_devel_CONTENTS="
+	usr/include/
+	usr/lib/*.a
+"
+
+libmbedcrypto0_CATEGORY="Libs"
+libmbedcrypto0_SUMMARY="Mbed TLS library (runtime)"
+libmbedcrypto0_CONTENTS="
+	usr/lib/cygmbedcrypto-0.dll
+"
+
+libmbedtls10_CATEGORY="Libs"
+libmbedtls10_SUMMARY="Mbed TLS library (runtime)"
+libmbedtls10_CONTENTS="
+	usr/lib/cygmbedtls-10.dll
+"
+
+libmbedx509_0_CATEGORY="Libs"
+libmbedx509_0_SUMMARY="Mbed TLS library (runtime)"
+libmbedx509_0_CONTENTS="
+	usr/lib/cygmbedx509-0.dll
+"
+
+CYGCMAKE_ARGS="
+	-DUSE_STATIC_MBEDTLS_LIBRARY=ON
+	-DUSE_SHARED_MBEDTLS_LIBRARY=ON
+"
+
+src_compile() {
+	cd ${B}
+	cygcmake
+	cygmake
+	cygmake apidoc
+}
+
+src_install() {
+	cd ${B}
+	cyginstall
+	install -d ${D}/usr/share/doc/mbedtls/apidoc
+	install ${S}/apidoc/* ${D}/usr/share/doc/mbedtls/apidoc
+}
+
+src_test() {
+	cd ${B}
+	PATH=${B}/library:$PATH cygtest
+}
