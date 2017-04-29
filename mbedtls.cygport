@@ -11,7 +11,7 @@ cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible."
 HOMEPAGE="https://tls.mbed.org/"
 SRC_URI="https://tls.mbed.org/download/mbedtls-${VERSION}-apache.tgz"
-DEPEND="doxygen graphviz"
+DEPEND="doxygen graphviz perl"
 
 PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto0 libmbedtls10 libmbedx509-0"
 
