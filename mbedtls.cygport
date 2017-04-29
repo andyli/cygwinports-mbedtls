@@ -15,12 +15,9 @@ DEPEND="doxygen graphviz"
 
 PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto0 libmbedtls10 libmbedx509-0"
 
-mbedtls_CATEGORY="Net"
-mbedtls_SUMMARY="Mbed TLS programs"
+mbedtls_CATEGORY="Libs"
+mbedtls_SUMMARY="Mbed TLS library (runtime)"
 mbedtls_REQUIRES="libmbedcrypto0 libmbedtls10 libmbedx509-0"
-mbedtls_CONTENTS="
-	usr/bin/
-"
 
 mbedtls_doc_CATEGORY="Doc"
 mbedtls_doc_SUMMARY="Mbed TLS library (documentation)"
@@ -38,24 +35,25 @@ mbedtls_devel_CONTENTS="
 libmbedcrypto0_CATEGORY="Libs"
 libmbedcrypto0_SUMMARY="Mbed TLS library (runtime)"
 libmbedcrypto0_CONTENTS="
-	usr/lib/cygmbedcrypto-0.dll
+	usr/bin/cygmbedcrypto-0.dll
 "
 
 libmbedtls10_CATEGORY="Libs"
 libmbedtls10_SUMMARY="Mbed TLS library (runtime)"
 libmbedtls10_CONTENTS="
-	usr/lib/cygmbedtls-10.dll
+	usr/bin/cygmbedtls-10.dll
 "
 
 libmbedx509_0_CATEGORY="Libs"
 libmbedx509_0_SUMMARY="Mbed TLS library (runtime)"
 libmbedx509_0_CONTENTS="
-	usr/lib/cygmbedx509-0.dll
+	usr/bin/cygmbedx509-0.dll
 "
 
 CYGCMAKE_ARGS="
 	-DUSE_STATIC_MBEDTLS_LIBRARY=ON
 	-DUSE_SHARED_MBEDTLS_LIBRARY=ON
+	-DENABLE_PROGRAMS=OFF
 "
 
 src_compile() {
@@ -70,9 +68,18 @@ src_install() {
 	cyginstall
 	install -d ${D}/usr/share/doc/mbedtls/apidoc
 	install ${S}/apidoc/* ${D}/usr/share/doc/mbedtls/apidoc
+
+	# https://github.com/ARMmbed/mbedtls/issues/574
+	install -d ${D}/usr/bin
+	mv ${D}/usr/lib/cygmbedcrypto-0.dll ${D}/usr/lib/cygmbedtls-10.dll ${D}/usr/lib/cygmbedx509-0.dll ${D}/usr/bin
 }
 
 src_test() {
 	cd ${B}
 	PATH=${B}/library:$PATH cygtest
 }
+
+DIFF_EXCLUDES="
+	apidoc
+	tests
+"
