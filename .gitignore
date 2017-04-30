@@ -1,0 +1,3 @@
+mbedtls-*.i686/
+mbedtls-*.x86_64/
+mbedtls-*.tgz
