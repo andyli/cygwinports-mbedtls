@@ -1,7 +1,7 @@
 inherit cmake
 
 NAME="mbedtls"
-VERSION=2.4.2
+VERSION=2.6.0
 RELEASE=1
 CATEGORY="Net"
 SUMMARY="Light-weight cryptographic and SSL/TLS library"
