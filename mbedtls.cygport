@@ -1,7 +1,7 @@
 inherit cmake
 
 NAME="mbedtls"
-VERSION=2.8.0
+VERSION=2.12.0
 RELEASE=1
 CATEGORY="Net"
 SUMMARY="Light-weight cryptographic and SSL/TLS library"
@@ -13,11 +13,11 @@ HOMEPAGE="https://tls.mbed.org/"
 SRC_URI="https://tls.mbed.org/download/mbedtls-${VERSION}-apache.tgz"
 DEPEND="doxygen graphviz perl"
 
-PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto1 libmbedtls10 libmbedx509_0"
+PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto3 libmbedtls11 libmbedx509_0"
 
 mbedtls_CATEGORY="Libs"
 mbedtls_SUMMARY="Mbed TLS library (runtime)"
-mbedtls_REQUIRES="libmbedcrypto1 libmbedtls10 libmbedx509_0"
+mbedtls_REQUIRES="libmbedcrypto3 libmbedtls11 libmbedx509_0"
 
 mbedtls_doc_CATEGORY="Doc"
 mbedtls_doc_SUMMARY="Mbed TLS library (documentation)"
@@ -32,16 +32,16 @@ mbedtls_devel_CONTENTS="
 	usr/lib/*.a
 "
 
-libmbedcrypto1_CATEGORY="Libs"
-libmbedcrypto1_SUMMARY="Mbed TLS library (runtime)"
-libmbedcrypto1_CONTENTS="
-	usr/bin/cygmbedcrypto-1.dll
+libmbedcrypto3_CATEGORY="Libs"
+libmbedcrypto3_SUMMARY="Mbed TLS library (runtime)"
+libmbedcrypto3_CONTENTS="
+	usr/bin/cygmbedcrypto-3.dll
 "
 
-libmbedtls10_CATEGORY="Libs"
-libmbedtls10_SUMMARY="Mbed TLS library (runtime)"
-libmbedtls10_CONTENTS="
-	usr/bin/cygmbedtls-10.dll
+libmbedtls11_CATEGORY="Libs"
+libmbedtls11_SUMMARY="Mbed TLS library (runtime)"
+libmbedtls11_CONTENTS="
+	usr/bin/cygmbedtls-11.dll
 "
 
 libmbedx509_0_CATEGORY="Libs"
@@ -71,7 +71,7 @@ src_install() {
 
 	# https://github.com/ARMmbed/mbedtls/issues/574
 	install -d ${D}/usr/bin
-	mv ${D}/usr/lib/cygmbedcrypto-1.dll ${D}/usr/lib/cygmbedtls-10.dll ${D}/usr/lib/cygmbedx509-0.dll ${D}/usr/bin
+	mv ${D}/usr/lib/cygmbedcrypto-3.dll ${D}/usr/lib/cygmbedtls-11.dll ${D}/usr/lib/cygmbedx509-0.dll ${D}/usr/bin
 }
 
 src_test() {
