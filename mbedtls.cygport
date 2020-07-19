@@ -1,7 +1,7 @@
 inherit cmake
 
 NAME="mbedtls"
-VERSION=2.16.3
+VERSION=2.23.0
 RELEASE=1
 CATEGORY="Net"
 SUMMARY="Light-weight cryptographic and SSL/TLS library"
@@ -10,14 +10,15 @@ Mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible."
 HOMEPAGE="https://tls.mbed.org/"
-SRC_URI="https://tls.mbed.org/download/mbedtls-${VERSION}-apache.tgz"
-DEPEND="doxygen graphviz perl"
+SRC_URI="https://github.com/ARMmbed/mbedtls/archive/mbedtls-${VERSION}.tar.gz"
+SRC_DIR="mbedtls-mbedtls-${VERSION}"
+DEPEND="doxygen graphviz perl python3"
 
-PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto3 libmbedtls12 libmbedx509_0"
+PKG_NAMES="mbedtls mbedtls-doc mbedtls-devel libmbedcrypto5 libmbedtls13 libmbedx509_1"
 
 mbedtls_CATEGORY="Libs"
 mbedtls_SUMMARY="Mbed TLS library (runtime)"
-mbedtls_REQUIRES="libmbedcrypto3 libmbedtls12 libmbedx509_0"
+mbedtls_REQUIRES="libmbedcrypto5 libmbedtls13 libmbedx509_1"
 
 mbedtls_doc_CATEGORY="Doc"
 mbedtls_doc_SUMMARY="Mbed TLS library (documentation)"
@@ -32,22 +33,22 @@ mbedtls_devel_CONTENTS="
 	usr/lib/*.a
 "
 
-libmbedcrypto3_CATEGORY="Libs"
-libmbedcrypto3_SUMMARY="Mbed TLS library (runtime)"
-libmbedcrypto3_CONTENTS="
-	usr/bin/cygmbedcrypto-3.dll
+libmbedcrypto5_CATEGORY="Libs"
+libmbedcrypto5_SUMMARY="Mbed TLS library (runtime)"
+libmbedcrypto5_CONTENTS="
+	usr/bin/cygmbedcrypto-5.dll
 "
 
-libmbedtls12_CATEGORY="Libs"
-libmbedtls12_SUMMARY="Mbed TLS library (runtime)"
-libmbedtls12_CONTENTS="
-	usr/bin/cygmbedtls-12.dll
+libmbedtls13_CATEGORY="Libs"
+libmbedtls13_SUMMARY="Mbed TLS library (runtime)"
+libmbedtls13_CONTENTS="
+	usr/bin/cygmbedtls-13.dll
 "
 
-libmbedx509_0_CATEGORY="Libs"
-libmbedx509_0_SUMMARY="Mbed TLS library (runtime)"
-libmbedx509_0_CONTENTS="
-	usr/bin/cygmbedx509-0.dll
+libmbedx509_1_CATEGORY="Libs"
+libmbedx509_1_SUMMARY="Mbed TLS library (runtime)"
+libmbedx509_1_CONTENTS="
+	usr/bin/cygmbedx509-1.dll
 "
 
 CYGCMAKE_ARGS="
@@ -71,7 +72,7 @@ src_install() {
 
 	# https://github.com/ARMmbed/mbedtls/issues/574
 	install -d ${D}/usr/bin
-	mv ${D}/usr/lib/cygmbedcrypto-3.dll ${D}/usr/lib/cygmbedtls-12.dll ${D}/usr/lib/cygmbedx509-0.dll ${D}/usr/bin
+	mv ${D}/usr/lib/cygmbedcrypto-5.dll ${D}/usr/lib/cygmbedtls-13.dll ${D}/usr/lib/cygmbedx509-1.dll ${D}/usr/bin
 }
 
 src_test() {
